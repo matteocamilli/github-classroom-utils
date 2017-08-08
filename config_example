@@ -1,0 +1,8 @@
+# ################################################################
+# Instructions
+# 1) create a copy of this file named "config"
+# 2) replace your own configuration settings in the "config" file
+# ################################################################
+
+  ORGANIZATION_NAME=My_Organization_Name
+  GITHUB_API_TOKEN=My_API_Token
