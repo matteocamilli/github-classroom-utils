@@ -3,7 +3,7 @@
 A set of simple *bash scripts* to automate boring stuff when collecting [GitHub Classroom](https://classroom.github.com/classrooms) assignments.
 
 Scripts require:
-- the [jq command-line JSON processor]();
+- the [jq command-line JSON processor](https://stedolan.github.io/jq/);
 - a [personal access token](https://github.com/settings/tokens) from GitHub.
 
 ## How do I get set up?
