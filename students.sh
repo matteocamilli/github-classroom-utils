@@ -29,12 +29,17 @@ user_data() {
 	echo $(echo $reply | jq '{A: .login, B: .name}' | egrep -v "\{|\}" | sed -e 's/"A"://' | sed -e 's/"B"://' | tr -d '"')
 }
 
-for repo_name in $(repo_data https://api.github.com/orgs/$ORGANIZATION_NAME/repos)
+last_page=$(curl -i -u $user:$GITHUB_API_TOKEN https://api.github.com/orgs/$ORGANIZATION_NAME/repos 2>/dev/null | grep last | cut -d'=' -f4 | cut -d'>' -f1)
+
+for page in $(seq 1 $last_page)
 do
-	info="$repo_name"
-	for user_url in $(collaborators_data https://api.github.com/repos/$ORGANIZATION_NAME/$repo_name/collaborators)
+	for repo_name in $(repo_data https://api.github.com/orgs/$ORGANIZATION_NAME/repos?page=$page)
 	do
-		info="$info, $(user_data $user_url)"
+		info="$repo_name"
+		for user_url in $(collaborators_data https://api.github.com/repos/$ORGANIZATION_NAME/$repo_name/collaborators)
+		do
+			info="$info, $(user_data $user_url)"
+		done
+		echo $info
 	done
-	echo $info
 done
